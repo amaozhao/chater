@@ -1,3 +1,3 @@
-from .dialog import DialogDetailView, DialogListView, DialogLogListView
+from .dialog import DialogDetailView, DialogListView, LogListView
 
-__all__ = ["DialogListView", "DialogDetailView", "DialogLogListView"]
+__all__ = ["DialogListView", "DialogDetailView", "LogListView"]

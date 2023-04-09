@@ -58,9 +58,9 @@ msgid "source"
 msgstr ""
 
 #: chat/models.py:53
-msgid "dialog log"
+msgid "log"
 msgstr "对话日志"
 
 #: chat/models.py:54
-msgid "dialog logs"
+msgid "logs"
 msgstr "对话日志"

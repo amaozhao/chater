@@ -1,3 +1,3 @@
-from .dialog import DialogLogSerializer, DialogSerializer
+from .dialog import DialogSerializer, LogSerializer
 
-__all__ = ["DialogSerializer", "DialogLogSerializer"]
+__all__ = ["DialogSerializer", "LogSerializer"]

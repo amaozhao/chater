@@ -23,7 +23,7 @@ class Dialog(models.Model):
         verbose_name_plural = _("dialogs")
 
 
-class DialogLog(models.Model):
+class Log(models.Model):
     REQUEST = "Quest"
     RESPONSE = "Response"
     _CHOICES = [
@@ -31,12 +31,16 @@ class DialogLog(models.Model):
         (RESPONSE, "Response"),
     ]
     dialog = models.ForeignKey(
-        Dialog, on_delete=models.CASCADE, verbose_name=_("dialog")
+        Dialog,
+        on_delete=models.CASCADE,
+        verbose_name=_("dialog"),
+        related_name="logs",
     )
     content = models.TextField(_("content"))
     source = models.CharField(
         _("source"), max_length=16, choices=_CHOICES, default=REQUEST
     )
+    tokens_count = models.IntegerField(_("tokens_count"), default=0)
     created = models.DateTimeField(_("created"), auto_now_add=True)
     updated = models.DateTimeField(_("updated"), auto_now=True)
     deleted = models.BooleanField(_("deleted"), default=False)
@@ -45,10 +49,10 @@ class DialogLog(models.Model):
         return f"{self.dialog.title}-{self.source}-{self.content[: 20]}-{self.created}"
 
     class Meta:
-        db_table = "dialog_log"
+        db_table = "log"
         indexes = [
             models.Index(fields=["source"], name="chat_dialog_log_source"),
             models.Index(fields=["created"], name="chat_dialog_log_created"),
         ]
-        verbose_name = _("dialog log")
-        verbose_name_plural = _("dialog logs")
+        verbose_name = _("log")
+        verbose_name_plural = _("logs")

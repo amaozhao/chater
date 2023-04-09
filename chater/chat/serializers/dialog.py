@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Dialog, DialogLog
+from ..models import Dialog, Log
 
 
 class DialogSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class DialogSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "created", "updated", "deleted"]
 
 
-class DialogLogSerializer(serializers.ModelSerializer):
+class LogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DialogLog
+        model = Log
         fields = ["id", "dialog", "content", "source"]

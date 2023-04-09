@@ -1,8 +1,10 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
 
-from ..models import Dialog, DialogLog
-from ..serializers import DialogLogSerializer, DialogSerializer
-from ..permissions import DialogOwner, DialogLogOwner
+from ..models import Dialog, Log
+from ..permissions import DialogLogOwner, DialogOwner
+from ..serializers import DialogSerializer, LogSerializer
+from ..services import ChatService
 
 
 class DialogListView(generics.ListCreateAPIView):
@@ -28,8 +30,8 @@ class DialogDetailView(generics.RetrieveUpdateDestroyAPIView):
         return None
 
 
-class DialogLogListView(generics.ListCreateAPIView):
-    serializer_class = DialogLogSerializer
+class LogListView(generics.ListCreateAPIView):
+    serializer_class = LogSerializer
     permission_classes = [DialogLogOwner]
 
     def get_queryset(self):
@@ -39,6 +41,16 @@ class DialogLogListView(generics.ListCreateAPIView):
             )
             if not dialog:
                 return []
-            queryset = DialogLog.objects.filter(dialog=dialog)
+            queryset = Log.objects.filter(dialog=dialog)
             return queryset
         return None
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        chat_service = ChatService()
+        log = chat_service.chat(serializer.instance)
+        log_serializer = LogSerializer(log)
+        headers = self.get_success_headers(serializer.data)
+        return Response(log_serializer.data, status=status.HTTP_200_OK, headers=headers)
