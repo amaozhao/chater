@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-09 18:59+0800\n"
+"POT-Creation-Date: 2023-04-10 10:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
 #: chat/apps.py:8
 msgid "chat"
 msgstr "聊天"
 
-#: chat/models.py:7
+#: chat/models.py:7 chat/models.py:27
 msgid "user"
 msgstr "用户"
 
 #: chat/models.py:8
-msgid "title"
-msgstr "标题"
+msgid "mobile"
+msgstr "手机号"
 
-#: chat/models.py:9 chat/models.py:40
+#: chat/models.py:9
+msgid "tokens count"
+msgstr "tokens计数"
+
+#: chat/models.py:10 chat/models.py:29 chat/models.py:64
 msgid "created"
 msgstr "创建时间"
 
-#: chat/models.py:10 chat/models.py:41
+#: chat/models.py:11 chat/models.py:30 chat/models.py:65
 msgid "updated"
 msgstr "更新时间"
 
-#: chat/models.py:11 chat/models.py:42
+#: chat/models.py:12 chat/models.py:31 chat/models.py:66
 msgid "deleted"
 msgstr "删除状态"
 
-#: chat/models.py:22 chat/models.py:34
+#: chat/models.py:22
+msgid "profile"
+msgstr "个人资料"
+
+#: chat/models.py:23
+msgid "profiles"
+msgstr "个人资料"
+
+#: chat/models.py:28
+msgid "title"
+msgstr "标题"
+
+#: chat/models.py:42 chat/models.py:56
 msgid "dialog"
 msgstr "对话"
 
-#: chat/models.py:23
+#: chat/models.py:43
 msgid "dialogs"
 msgstr "对话"
 
-#: chat/models.py:36
+#: chat/models.py:59
 msgid "content"
 msgstr "内容"
 
-#: chat/models.py:38
+#: chat/models.py:61
 msgid "source"
-msgstr ""
+msgstr "来源"
 
-#: chat/models.py:53
+#: chat/models.py:63
+msgid "tokens_count"
+msgstr "tokens数"
+
+#: chat/models.py:77
 msgid "log"
 msgstr "对话日志"
 
-#: chat/models.py:54
+#: chat/models.py:78
 msgid "logs"
 msgstr "对话日志"

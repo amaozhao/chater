@@ -1,4 +1,4 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 
 from ..models import Dialog, Log
@@ -9,7 +9,7 @@ from ..services import ChatService
 
 class DialogListView(generics.ListCreateAPIView):
     serializer_class = DialogSerializer
-    permission_classes = [DialogOwner]
+    permission_classes = [DialogOwner, permissions.IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -22,7 +22,7 @@ class DialogListView(generics.ListCreateAPIView):
 
 class DialogDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DialogSerializer
-    permission_classes = [DialogOwner]
+    permission_classes = [DialogOwner, permissions.IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -32,17 +32,14 @@ class DialogDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class LogListView(generics.ListCreateAPIView):
     serializer_class = LogSerializer
-    permission_classes = [DialogLogOwner]
+    permission_classes = [DialogLogOwner, permissions.IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
             dialog = Dialog.objects.get(
                 user=self.request.user, id=self.kwargs["dialog"]
             )
-            if not dialog:
-                return []
-            queryset = Log.objects.filter(dialog=dialog)
-            return queryset
+            return Log.objects.filter(dialog=dialog) if dialog else []
         return None
 
     def create(self, request, *args, **kwargs):
@@ -51,6 +48,6 @@ class LogListView(generics.ListCreateAPIView):
         self.perform_create(serializer)
         chat_service = ChatService()
         log = chat_service.chat(serializer.instance)
-        log_serializer = LogSerializer(log)
+        log_serializer = LogSerializer(instance=log)
         headers = self.get_success_headers(serializer.data)
         return Response(log_serializer.data, status=status.HTTP_200_OK, headers=headers)

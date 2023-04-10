@@ -3,6 +3,26 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("user"))
+    mobile = models.CharField(_("mobile"), max_length=20)
+    tokens_count = models.IntegerField(_("tokens count"), default=0)
+    created = models.DateTimeField(_("created"), auto_now_add=True)
+    updated = models.DateTimeField(_("updated"), auto_now=True)
+    deleted = models.BooleanField(_("deleted"), default=False)
+
+    def __str__(self):
+        return f"{self.user.username}-profile"
+
+    class Meta:
+        db_table = "profile"
+        indexes = [
+            models.Index(fields=["mobile"], name="chat_profile_mobile"),
+        ]
+        verbose_name = _("profile")
+        verbose_name_plural = _("profiles")
+
+
 class Dialog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
     title = models.CharField(_("title"), max_length=128)
